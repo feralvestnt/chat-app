@@ -13,7 +13,7 @@ function ChatContainer({ loadChat, save, chatList, user, ...props }) {
       loadChat().catch(error => {
         alert("Loading chat failed " + error);
       });
-    }, 300000);
+    }, 5000);
   }, [props.chat]);
 
   function handleChange(event) {
@@ -28,8 +28,6 @@ function ChatContainer({ loadChat, save, chatList, user, ...props }) {
     event.preventDefault();
     let newChat = { ...chat, user };
 
-    this.clientRef.sendMessage("/topics/all", chat);
-
     save(newChat).catch(error => {
       alert("Saving chat failed " + error);
     });
@@ -37,16 +35,6 @@ function ChatContainer({ loadChat, save, chatList, user, ...props }) {
 
   return (
     <div>
-      <SockJsClient
-        url="http://localhost:8088/ws"
-        topics={["/topics/all"]}
-        onMessage={msg => {
-          console.log(msg);
-        }}
-        ref={client => {
-          this.clientRef = client;
-        }}
-      />
       <ChatForm
         onChange={handleChange}
         onSave={handleSave}
