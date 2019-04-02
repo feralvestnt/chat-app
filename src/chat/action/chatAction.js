@@ -1,14 +1,6 @@
 import * as types from "../actionTypes";
 import * as chatApi from "../api/chatApi";
 
-export function loadChatSuccess(chatList) {
-  return { type: types.LOAD_CHAT_SUCCESS, chatList };
-}
-
-export function saveChatSuccess(chat) {
-  return { type: types.SAVE_CHAT_SUCCESS, chat };
-}
-
 export function save(chat) {
   //eslint-disable-next-line no-unused-vars
   return function(dispatch) {
@@ -23,16 +15,35 @@ export function save(chat) {
   };
 }
 
-export function loadChat() {
+export function saveChatSuccess(chat) {
+  return { type: types.SAVE_CHAT_SUCCESS, chat };
+}
+
+export function loadChat(loadedChat) {
+  //eslint-disable-next-line no-unused-vars
+  return function(dispatch) {
+    dispatch(loadChatSuccess(loadedChat));
+  };
+}
+
+export function loadChatSuccess(chatList) {
+  return { type: types.LOAD_CHAT_SUCCESS, chatList };
+}
+
+export function getAllMessages() {
   //eslint-disable-next-line no-unused-vars
   return function(dispatch) {
     return chatApi
-      .loadChat()
+      .getAllMessages()
       .then(chatList => {
-        dispatch(loadChatSuccess(chatList));
+        dispatch(loadAllChatSuccess(chatList));
       })
       .catch(error => {
         throw error;
       });
   };
+}
+
+export function loadAllChatSuccess(chatList) {
+  return { type: types.LOAD_ALL_CHAT_SUCCESS, chatList };
 }

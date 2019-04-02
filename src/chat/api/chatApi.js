@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseUrl = process.env.API_URL;
 
-export function loadChat() {
+export function getAllMessages() {
   return axios.get(baseUrl + "/chat");
 }
 
