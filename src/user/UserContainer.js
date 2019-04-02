@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import UserForm from "./UserForm";
 import { enterChat } from "./action/userAction";
+import { getAllMessages } from "../chat/action/chatAction";
 import PropTypes from "prop-types";
 
-function UserContainer({ enterChat, history, ...props }) {
+function UserContainer({ enterChat, getAllMessages, history, ...props }) {
   const [user, setUser] = useState({ ...props.user });
 
   function handleChange(event) {
@@ -17,9 +18,16 @@ function UserContainer({ enterChat, history, ...props }) {
 
   function handleEnterChat(event) {
     event.preventDefault();
-    enterChat(user).then(() => {
-      history.push("/chat");
+    getAllMessages().catch(error => {
+      alert("Loading messages failed " + error);
     });
+    enterChat(user)
+      .then(() => {
+        history.push("/chat");
+      })
+      .catch(error => {
+        alert("Entering chat failed " + error);
+      });
   }
 
   return (
@@ -33,6 +41,7 @@ function UserContainer({ enterChat, history, ...props }) {
 
 UserContainer.propTypes = {
   enterChat: PropTypes.func.isRequired,
+  getAllMessages: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired
 };
@@ -45,7 +54,8 @@ function mapStateToProps() {
 }
 
 const mapDispatchToProps = {
-  enterChat
+  enterChat,
+  getAllMessages
 };
 
 export default connect(
