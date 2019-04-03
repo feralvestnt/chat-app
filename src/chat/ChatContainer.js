@@ -49,7 +49,7 @@ class ChatContainer extends React.Component {
             console.log("Connected!");
           }}
           onDisconnect={console.log("Disconnected!")}
-          debug={true}
+          debug={false}
         />
 
         <ChatForm

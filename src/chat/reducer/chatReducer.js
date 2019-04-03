@@ -6,7 +6,6 @@ export default function chatReducer(state = initialState.chatList, action) {
     case types.LOAD_CHAT_SUCCESS:
       return action.chatList;
     case types.LOAD_ALL_CHAT_SUCCESS:
-      debugger;
       return action.chatList.data;
     case types.SAVE_CHAT_SUCCESS:
       return [...state, { ...action.chat.data }];
